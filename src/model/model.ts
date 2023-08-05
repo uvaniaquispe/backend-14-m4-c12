@@ -18,7 +18,10 @@ class Book {
 	author;
 	id;
 
-	constructor(name: string, released: string, author: string) {
+	constructor( book: BookData) {
+		const {
+			name, released, author 
+		} = book
 		this.name = name;
 		this.released = released;
 		this.author = author;
@@ -39,14 +42,17 @@ class Book {
 }
 
 const findBookByTitle = (title: string) =>
-	DB.find((book) => ); // Completar
+	DB.find((book) => book.id.includes(title)); // Completar
 
-function uploadNewBook(book: BookData): boolean {
+function uploadNewBook(book: Book): boolean {
 	const isBookOnDB = findBookByTitle(book.name);
 
 	if (isBookOnDB) return false;
 
 	// Completar
+	DB.push(book);
+	const stringifiedDB = JSON.stringify(DB);
+	writeFileSync(PATH, stringifiedDB);
 
 	return true;
 }
